@@ -2,6 +2,7 @@
 
 <?php 
 
+
 session_start();
 
 !isset($_SESSION["contatore"]) ? $_SESSION["contatore"] = 1 : $_SESSION["contatore"]++;
