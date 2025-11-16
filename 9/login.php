@@ -14,7 +14,7 @@ session_start();
 <form method="POST" action="login.php">
 <label>
   Username <input type="text" name ="username"required><br>
-   Password <input type="text" name ="password"required><br>
+   Password <input type="password" name ="password"required><br>
 </label>
    <button type="submit">Invia</button> 
 </form>
@@ -26,14 +26,30 @@ session_start();
 
 <?php 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-if ($_POST["username"] == "marco" && $_POST["password"] == "1234"){
-  $_SESSION["utente"] = $_POST["username"];
-header("Location: cameriere.php");
-exit;
-}else {
-  echo "password o username sbagliato";
-}
-}
   
+$utenti = [
+    "marco"   => "1234",
+    "lucia"   => "abcd",
+    "paolo"   => "pass",
+    "admin"   => "admin123"
+];
 
+
+    $user = trim($_POST["username"]);
+    $pass = trim($_POST["password"]);
+
+
+    if ($utenti[$user] === $pass) {
+
+        $_SESSION["utente"] = $user;
+
+        if (!isset($_SESSION["ordini"])) {
+            $_SESSION["ordini"] = [];
+        }
+
+        header("Location: cameriere.php");
+        exit;
+
+    } else echo "<p style='color:red;'>Username o password errati.</p>";
+}
 ?>

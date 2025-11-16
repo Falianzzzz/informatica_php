@@ -15,14 +15,14 @@ echo "ciao $username";
   <form action="cameriere.php" method="post">
 
   <label>
-Tavolo <input type="number" name="tavolo" required><br>
+Tavolo <input type="number" name="tavolo" min="1" max="20" required><br>
 Nome piatto <select name="piatto" required>
   <option value="spaghetti" >Spaghetti</option>
   <option value="zuppa" >Zuppa</option>
   <option value="carne" >Carne</option>
   <option value="spinaci" >Spinaci</option>
 </select><br>
-Quantita <input type="number" name="quantita" required><br>
+Quantita <input type="number" name="quantita" min="1" required><br>
 note <input type="text" name="note"><br>
 </label>
    <button type="submit">Invia</button> 
