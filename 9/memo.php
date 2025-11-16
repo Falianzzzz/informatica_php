@@ -26,41 +26,6 @@ $contoTavoli = [
   "20" =>0,
 
 ];
-/*
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-
-    $piatto = $_POST['piatto']; 
-   $val =  $_SESSION["ordini"]["costo"];
-   $tavolo = $_SESSION["ordini"]["tavolo"];
-    unset($_SESSION["ordini"][$piatto]);
-    $contoTavoli[$tavolo] -= $val;
-
-}
-*/
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-
-    $index = $_POST['piatto'];
-    
-    if(isset($_SESSION["ordini"][$index])) {
-        $ordine = $_SESSION["ordini"][$index];
-
-        $costo = 0;
-        switch ($ordine["piatto"]) {
-            case 'spaghetti': $costo = 5; break;
-            case 'zuppa': $costo = 4; break;
-            case 'carne': $costo = 3; break;
-            case 'spinaci': $costo = 2; break;
-        }
-        $costo *= $ordine["quantita"];
-
-        $tavolo = $ordine["tavolo"];
-
-        unset($_SESSION["ordini"][$index]);
-
-        $contoTavoli[$tavolo] -= $costo;
-    }
-
-}
 
 if (!empty($_SESSION["ordini"])) {
     echo "<table border='1' cellpadding='8' cellspacing='0'>";
@@ -118,13 +83,44 @@ if (!empty($_SESSION["ordini"])) {
     echo "</table>";
 
     for ($i=1; $i <= 20; $i++) { 
-     if( $contoTavoli[$i] > 0) echo "il conto totale del tavolo $i equivale a ". $contoTavoli[$i] ."€\n";
+     if( $contoTavoli[$i] > 0) echo "\nil conto totale del tavolo $i equivale a ". $contoTavoli[$i] ."€";
     }
    
 } else {
     echo "<p>Nessun ordine presente.</p>";
 }
 
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    $index = $_POST['piatto']; 
+
+    if ( isset($_SESSION["ordini"][$index])){
+    $ordine = $_SESSION["ordini"][$index];
+    $tavolo = $ordine["tavolo"];
+ 
+
+     switch ($ordine["piatto"]) {
+        case 'spaghetti':
+         $val = 5;
+          break;
+           case 'zuppa':
+          $val = 4;
+          break;
+           case 'carne':
+          $val = 3;
+          break;
+           case 'spinaci':
+          $val = 2;
+          break;
+
+      }
+
+      $val *= $ordine["quantita"];
+    $contoTavoli[$tavolo] -= $val;
+
+      unset($_SESSION["ordini"][$index]);
+}
+}
 ?>
 
 <!DOCTYPE html>
