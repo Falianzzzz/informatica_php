@@ -27,6 +27,15 @@ $contoTavoli = [
 
 ];
 
+
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    $index = $_POST['piatto']; 
+    if ( isset($_SESSION["ordini"][$index])) unset($_SESSION["ordini"][$index]);
+
+}
+
 if (!empty($_SESSION["ordini"])) {
     echo "<table border='1' cellpadding='8' cellspacing='0'>";
     echo "<tr>
@@ -83,44 +92,13 @@ if (!empty($_SESSION["ordini"])) {
     echo "</table>";
 
     for ($i=1; $i <= 20; $i++) { 
-     if( $contoTavoli[$i] > 0) echo "\nil conto totale del tavolo $i equivale a ". $contoTavoli[$i] ."€";
+     if( $contoTavoli[$i] > 0) echo "il conto totale del tavolo $i equivale a ". $contoTavoli[$i] ."€ <br>";
     }
    
 } else {
     echo "<p>Nessun ordine presente.</p>";
 }
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-
-    $index = $_POST['piatto']; 
-
-    if ( isset($_SESSION["ordini"][$index])){
-    $ordine = $_SESSION["ordini"][$index];
-    $tavolo = $ordine["tavolo"];
- 
-
-     switch ($ordine["piatto"]) {
-        case 'spaghetti':
-         $val = 5;
-          break;
-           case 'zuppa':
-          $val = 4;
-          break;
-           case 'carne':
-          $val = 3;
-          break;
-           case 'spinaci':
-          $val = 2;
-          break;
-
-      }
-
-      $val *= $ordine["quantita"];
-    $contoTavoli[$tavolo] -= $val;
-
-      unset($_SESSION["ordini"][$index]);
-}
-}
 ?>
 
 <!DOCTYPE html>
