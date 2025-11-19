@@ -3,6 +3,7 @@ session_start();
 
 $username = $_SESSION["utente"];
 echo "ciao $username";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
